@@ -13,23 +13,56 @@
 <div id="cy" style="width: 100%; height: 600px; border: 1px solid #ccc;"></div>
 
 @code {
-    private Cytoscape? _graph;
-    
-    // This tries to load the graph on startup
+    // Load the graph on startup
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            // Assuming _graph is initialized elsewhere
             await RenderGraphAsync();
         }
     }
 
+    // Call the JS Interop script to render the graph
     private async Task RenderGraphAsync()
     {
-        _graph = CyGraph.initEmpty();
-        
+        Cytoscape graph = CreateGraph();
         var options = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-        await JSRuntime.InvokeVoidAsync("renderCytoscapeGraph", JsonConvert.SerializeObject(_graph, options));
+        await JSRuntime.InvokeVoidAsync("renderCytoscapeGraph", JsonConvert.SerializeObject(graph, options));
+    }
+
+    // Initialize the graph and add content and styles
+    private Cytoscape CreateGraph()
+    {
+        Cytoscape graph = CyGraph.initEmpty();
+        
+        Element[] nodes =
+        [
+            Elements.node("j", ListModule.OfSeq([new CyParam.CyStyleParam("label", "Jerry"), new CyParam.CyStyleParam("weight", 65), new CyParam.CyStyleParam("color", "#6FB1FC"), new CyParam.CyStyleParam("shape", "triangle")])),
+            Elements.node("e", ListModule.OfSeq([new CyParam.CyStyleParam("label", "Elaine"), new CyParam.CyStyleParam("weight", 45), new CyParam.CyStyleParam("color", "#EDA1ED"), new CyParam.CyStyleParam("shape", "ellipse")])),
+            Elements.node("k", ListModule.OfSeq([new CyParam.CyStyleParam("label", "Kramer"), new CyParam.CyStyleParam("weight", 75), new CyParam.CyStyleParam("color", "#86B342"), new CyParam.CyStyleParam("shape", "octagon")])),
+            Elements.node("g", ListModule.OfSeq([new CyParam.CyStyleParam("label", "George"), new CyParam.CyStyleParam("weight", 70), new CyParam.CyStyleParam("color", "#F5A45D"), new CyParam.CyStyleParam("shape", "rectangle")]))
+        ];
+        Element[] edges =
+        [
+            Elements.edge("1", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#6FB1FC"), new CyParam.CyStyleParam("weight", 90)])),
+            Elements.edge("2", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#6FB1FC"), new CyParam.CyStyleParam("weight", 120)])),
+            Elements.edge("3", "j", "k", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#6FB1FC"), new CyParam.CyStyleParam("weight", 70)])),
+            Elements.edge("4", "j", "g", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#6FB1FC"), new CyParam.CyStyleParam("weight", 80)])),
+
+            Elements.edge("5", "e", "j", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#EDA1ED"), new CyParam.CyStyleParam("weight", 95)])),
+            Elements.withClass(new CyParam.CyStyleClass("questionable"), Elements.edge("6", "e", "k", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#EDA1ED"), new CyParam.CyStyleParam("weight", 60)]))),
+
+            Elements.edge("7", "k", "j", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#86B342"), new CyParam.CyStyleParam("weight", 100)])),
+            Elements.edge("8", "k", "e", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#86B342"), new CyParam.CyStyleParam("weight", 100)])),
+            Elements.edge("9", "k", "g", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#86B342"), new CyParam.CyStyleParam("weight", 100)])),
+
+            Elements.edge("10", "g", "j", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#F5A45D"), new CyParam.CyStyleParam("weight", 90)])),
+            Elements.edge("11", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#F5A45D"), new CyParam.CyStyleParam("weight", 90)])),
+            Elements.edge("12", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#F5A45D"), new CyParam.CyStyleParam("weight", 90)])),
+            Elements.edge("13", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("color", "#F5A45D"), new CyParam.CyStyleParam("weight", 90)]))
+        ];
+
+        graph = CyGraph.withElements(nodes.Concat(edges), graph);
+        return graph;
     }
 }
