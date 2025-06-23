@@ -26,8 +26,7 @@
     private async Task RenderGraphAsync()
     {
         Cytoscape graph = CreateGraph();
-        var options = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-        await JSRuntime.InvokeVoidAsync("renderCytoscapeGraph", JsonConvert.SerializeObject(graph, options));
+        await JSRuntime.InvokeVoidAsync("renderCytoscapeGraph", JsonConvert.SerializeObject(graph));
     }
 
     // Initialize the graph and add content and styles
