@@ -33,8 +33,10 @@
     // Initialize the graph and add content and styles
     private Cytoscape CreateGraph()
     {
+        // Initializing graph
         Cytoscape graph = CyGraph.initEmpty();
         
+        // Adding nodes and edges with data
         Element[] elements =
         [
             Elements.node("j", ListModule.OfSeq([new CyParam.CyStyleParam("nodeLabel", "Jerry"), new CyParam.CyStyleParam("nodeWeight", 65), new CyParam.CyStyleParam("nodeColor", "#6FB1FC"), new CyParam.CyStyleParam("nodeShape", "triangle")])),
@@ -56,6 +58,9 @@
             Elements.edge("12", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)])),
             Elements.edge("13", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)]))
         ];
+        graph = CyGraph.withElements(elements, graph);
+        
+        // Styling nodes
         CyParam.CyStyleParam[] nodeStyles = [
             CyParam.shape("data(nodeShape)"),
             CyParam.width("mapData(nodeWeight, 40, 80, 20, 60)"), 
@@ -66,6 +71,17 @@
             CyParam.Background.color("data(nodeColor)"),
             CyParam.color("#fff"),
         ];
+        graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
+        
+        // Interactivity
+        CyParam.CyStyleParam[] interactivityStyles =
+        [
+            CyParam.Border.width(3),
+            CyParam.Border.color("#333"),
+        ];
+        graph.AddStyle(Style.Init(":selected", ListModule.OfSeq(interactivityStyles)));
+
+        // Styling edges
         CyParam.CyStyleParam[] edgeStyles = [
             CyParam.Curve.style("bezier"),
             CyParam.opacity(0.666),
@@ -76,11 +92,9 @@
             CyParam.Target.Arrow.color("data(edgeColor)"),
             CyParam.Source.Arrow.color("data(edgeColor)"),
         ];
-        CyParam.CyStyleParam[] interactivityStyles =
-        [
-            CyParam.Border.width(3),
-            CyParam.Border.color("#333"),
-        ];
+        graph.AddStyle(Style.Init("edge", ListModule.OfSeq(edgeStyles)));
+        
+        // Edge styling with class identifier
         CyParam.CyStyleParam[] questionableClassStyles =
         [
             CyParam.Line.style("dotted"),
@@ -91,14 +105,11 @@
             CyParam.opacity(0.666),
             CyParam.Text.opacity(0),
         ];
-        Layout? layout = LayoutModule.initCose(LayoutModule.LayoutOptions.Cose<object, object, object, object, Layout>( null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null));
-
-        graph = CyGraph.withElements(elements, graph);
-        graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
-        graph.AddStyle(Style.Init("edge", ListModule.OfSeq(edgeStyles)));
-        graph.AddStyle(Style.Init(":selected", ListModule.OfSeq(interactivityStyles)));
         graph.AddStyle(Style.Init("edge.questionable", ListModule.OfSeq(questionableClassStyles)));
         graph.AddStyle(Style.Init(".faded", ListModule.OfSeq(fadedClassStyles)));
+        
+        // Using a graph layout
+        Layout? layout = LayoutModule.initCose(LayoutModule.LayoutOptions.Cose<object, object, object, object, Layout>( null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null));
         graph = CyGraph.withLayout(layout, graph);
         graph = CyGraph.withSize(800, 800, graph);
         
