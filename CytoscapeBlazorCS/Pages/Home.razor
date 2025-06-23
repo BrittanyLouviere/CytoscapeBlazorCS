@@ -42,21 +42,20 @@
             Elements.node("k", ListModule.OfSeq([new CyParam.CyStyleParam("nodeLabel", "Kramer"), new CyParam.CyStyleParam("nodeWeight", 75), new CyParam.CyStyleParam("nodeColor", "#86B342"), new CyParam.CyStyleParam("nodeShape", "octagon")])),
             Elements.node("g", ListModule.OfSeq([new CyParam.CyStyleParam("nodeLabel", "George"), new CyParam.CyStyleParam("nodeWeight", 70), new CyParam.CyStyleParam("nodeColor", "#F5A45D"), new CyParam.CyStyleParam("nodeShape", "rectangle")])),
 
-            Elements.edge("1", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#6FB1FC"), new CyParam.CyStyleParam("nodeWeight", 90)])),
-            Elements.edge("2", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#6FB1FC"), new CyParam.CyStyleParam("nodeWeight", 120)])),
-            Elements.edge("3", "j", "k", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#6FB1FC"), new CyParam.CyStyleParam("nodeWeight", 70)])),
-            Elements.edge("4", "j", "g", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#6FB1FC"), new CyParam.CyStyleParam("nodeWeight", 80)])),
-            Elements.edge("5", "e", "j", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#EDA1ED"), new CyParam.CyStyleParam("nodeWeight", 95)])),
-            Elements.withClass(new CyParam.CyStyleClass("questionable"), Elements.edge("6", "e", "k", ListModule.OfSeq([new CyParam.CyStyleParam("nodeColor", "#EDA1ED"), new CyParam.CyStyleParam("nodeWeight", 60)]))),
-            Elements.edge("7", "k", "j", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#86B342"), new CyParam.CyStyleParam("nodeWeight", 100)])),
-            Elements.edge("8", "k", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#86B342"), new CyParam.CyStyleParam("nodeWeight", 100)])),
-            Elements.edge("9", "k", "g", ListModule.OfSeq([new CyParam.CyStyleParam( "nodeColor", "#86B342"), new CyParam.CyStyleParam("nodeWeight", 100)])),
-            Elements.edge("10", "g", "j", ListModule.OfSeq([new CyParam.CyStyleParam("nodeColor", "#F5A45D"), new CyParam.CyStyleParam("nodeWeight", 90)])),
-            Elements.edge("11", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("nodeColor", "#F5A45D"), new CyParam.CyStyleParam("nodeWeight", 90)])),
-            Elements.edge("12", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("nodeColor", "#F5A45D"), new CyParam.CyStyleParam("nodeWeight", 90)])),
-            Elements.edge("13", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("nodeColor", "#F5A45D"), new CyParam.CyStyleParam("nodeWeight", 90)]))
+            Elements.edge("1", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#6FB1FC"), new CyParam.CyStyleParam("edgeWeight", 90)])),
+            Elements.edge("2", "j", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#6FB1FC"), new CyParam.CyStyleParam("edgeWeight", 120)])),
+            Elements.edge("3", "j", "k", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#6FB1FC"), new CyParam.CyStyleParam("edgeWeight", 70)])),
+            Elements.edge("4", "j", "g", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#6FB1FC"), new CyParam.CyStyleParam("edgeWeight", 80)])),
+            Elements.edge("5", "e", "j", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#EDA1ED"), new CyParam.CyStyleParam("edgeWeight", 95)])),
+            Elements.withClass(new CyParam.CyStyleClass("questionable"), Elements.edge("6", "e", "k", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#EDA1ED"), new CyParam.CyStyleParam("edgeWeight", 60)]))),
+            Elements.edge("7", "k", "j", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#86B342"), new CyParam.CyStyleParam("edgeWeight", 100)])),
+            Elements.edge("8", "k", "e", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#86B342"), new CyParam.CyStyleParam("edgeWeight", 100)])),
+            Elements.edge("9", "k", "g", ListModule.OfSeq([new CyParam.CyStyleParam( "edgeColor", "#86B342"), new CyParam.CyStyleParam("edgeWeight", 100)])),
+            Elements.edge("10", "g", "j", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)])),
+            Elements.edge("11", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)])),
+            Elements.edge("12", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)])),
+            Elements.edge("13", "g", "g", ListModule.OfSeq([new CyParam.CyStyleParam("edgeColor", "#F5A45D"), new CyParam.CyStyleParam("edgeWeight", 90)]))
         ];
-
         CyParam.CyStyleParam[] nodeStyles = [
             CyParam.shape("data(nodeShape)"),
             CyParam.width("mapData(nodeWeight, 40, 80, 20, 60)"), 
@@ -67,9 +66,20 @@
             CyParam.Background.color("data(nodeColor)"),
             CyParam.color("#fff"),
         ];
+        CyParam.CyStyleParam[] edgeStyles = [
+            CyParam.Curve.style("bezier"),
+            CyParam.opacity(0.666),
+            CyParam.width("mapData(edgeWeight, 70, 100, 2, 6)"),
+            CyParam.Target.Arrow.shape("triangle"),
+            CyParam.Source.Arrow.shape("circle"),
+            CyParam.Line.color("data(edgeColor)"),
+            CyParam.Target.Arrow.color("data(edgeColor)"),
+            CyParam.Source.Arrow.color("data(edgeColor)"),
+        ];
 
         graph = CyGraph.withElements(elements, graph);
         graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
+        graph.AddStyle(Style.Init("edge", ListModule.OfSeq(edgeStyles)));
         
         return graph;
     }
