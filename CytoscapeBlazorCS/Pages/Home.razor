@@ -76,10 +76,16 @@
             CyParam.Target.Arrow.color("data(edgeColor)"),
             CyParam.Source.Arrow.color("data(edgeColor)"),
         ];
+        CyParam.CyStyleParam[] interactivityStyles =
+        [
+            CyParam.Border.width(3),
+            CyParam.Border.color("#333"),
+        ];
 
         graph = CyGraph.withElements(elements, graph);
         graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
         graph.AddStyle(Style.Init("edge", ListModule.OfSeq(edgeStyles)));
+        graph.AddStyle(Style.Init(":selected", ListModule.OfSeq(interactivityStyles)));
         
         return graph;
     }
