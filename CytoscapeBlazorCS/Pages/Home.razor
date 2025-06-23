@@ -91,6 +91,7 @@
             CyParam.opacity(0.666),
             CyParam.Text.opacity(0),
         ];
+        Layout? layout = LayoutModule.initCose(LayoutModule.LayoutOptions.Cose<object, object, object, object, Layout>( null, null, null, null, 40, null, null, null, null, null, null, null, null, null, null));
 
         graph = CyGraph.withElements(elements, graph);
         graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
@@ -98,6 +99,8 @@
         graph.AddStyle(Style.Init(":selected", ListModule.OfSeq(interactivityStyles)));
         graph.AddStyle(Style.Init("edge.questionable", ListModule.OfSeq(questionableClassStyles)));
         graph.AddStyle(Style.Init(".faded", ListModule.OfSeq(fadedClassStyles)));
+        graph = CyGraph.withLayout(layout, graph);
+        graph = CyGraph.withSize(800, 800, graph);
         
         return graph;
     }
