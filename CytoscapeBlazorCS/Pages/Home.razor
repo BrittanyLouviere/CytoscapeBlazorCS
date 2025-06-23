@@ -81,11 +81,23 @@
             CyParam.Border.width(3),
             CyParam.Border.color("#333"),
         ];
+        CyParam.CyStyleParam[] questionableClassStyles =
+        [
+            CyParam.Line.style("dotted"),
+            CyParam.Target.Arrow.shape("diamond"),
+        ];
+        CyParam.CyStyleParam[] fadedClassStyles =
+        [
+            CyParam.opacity(0.666),
+            CyParam.Text.opacity(0),
+        ];
 
         graph = CyGraph.withElements(elements, graph);
         graph.AddStyle(Style.Init("node", ListModule.OfSeq(nodeStyles)));
         graph.AddStyle(Style.Init("edge", ListModule.OfSeq(edgeStyles)));
         graph.AddStyle(Style.Init(":selected", ListModule.OfSeq(interactivityStyles)));
+        graph.AddStyle(Style.Init("edge.questionable", ListModule.OfSeq(questionableClassStyles)));
+        graph.AddStyle(Style.Init(".faded", ListModule.OfSeq(fadedClassStyles)));
         
         return graph;
     }
